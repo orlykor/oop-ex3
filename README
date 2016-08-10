@@ -1,0 +1,224 @@
+orlykor12
+203595541
+orly koren
+
+=============================
+=      File description     =
+=============================
+
+SimpleHashSet.java - The SimpleHashSet class is an abstract class with implements the SimpleSet interface.
+
+ChainedHashSet.java -The ChainedHashSet class extends the SimpleHashSet class. each cell in the hash table 
+is a list (“bucket”), and an element with the hash k is added to the k’th bucket.
+
+OpenHashSet.java- The OpenHashSet class extends the SimpleHashSet class. each cell in the hash table is a 
+reference to a String. the OpenHashSet insert the string to the right place according to the hashcode. no 
+duplicates are allowed.
+
+CollectionFacadeSet.java- The CollectionFacadeSet Wraps an underlying Collection and serves to both simplify 
+its API and give it a common type with the implemented SimpleHashSets.
+
+SimpleSetPerformanceAnalyzer.java- The SimpleSetPerformanceAnalyzer has a main method that measures the run-
+times requested in the “Performance Analysis” section.
+
+LinkedListHelper.java- This class represents a linked list. implements some of the LinkedList<E> methods.
+beacuse I couldnt make an instance of an array of linkedlist in the ChainedHashSet I created a new class of 
+linkedlist that helps me get the needed methods of the java linkedlist class, that way when I created an 
+instance of the linkedlisthelper, i could create an array of linkedlist.
+
+
+=============================
+=          Design           =
+=============================
+
+my design is based on the abstract class SimpleHashSets, in there i wrote the methods that i could 
+see that reapet in the other two classes the extends the SimpleHashSets. that way I could prevent 
+code repetition as much as i could. 
+
+
+
+=============================
+=  Implementation details   =
+=============================
+
+How you implemented ChainedHashSet’s table-
+first I created the linkedList array instance using the LinkedListHelper class I created. with that i could 
+create the table for the hashing. when I added the element i checked in my other method(not the add method)
+that the string is not in the table already, when its not then i add the string to the place the hashcode 
+pointed in the table. when not minding if a string is in the place or not. that way we have a "bucket" of 
+strings.  when rehashing, if theres a "bucket" of a linkedlist i turn it to an array so i could add each
+string to the table again.
+
+How you implemented the deletion mechanism in OpenHashSet- 
+I created a sort of a flag with the name of deleted, that way everytime a string was deleted i put in that 
+place that flag, and that way the add method knows not to add a string to that place. 
+
+
+
+=============================
+=    Answers to questions   =
+=============================
+
+
+
+The results of the analysis-
+
+1. insert data1 to all data structures-
+ChainedHashSet_AddData1 = 562520
+OpenHashSet_AddData1 = 311705
+TreeSet_AddData1 = 65
+LinkedList_AddData1 = 47975
+***HashSet_AddData1 = 47*** - the fastest
+
+2.insert data2 to all data structures-
+ChainedHashSet_AddData2 = 240114
+OpenHashSet_AddData2 = 74487
+TreeSet_AddData2 = 47
+LinkedList_AddData2 = 199914
+***HashSet_AddData2 = 16*** - the fastest
+
+3.compare between Data1 to Data2-
+ChainedHashSet- AddData1 = 562520 / AddData2 = 240114
+OpenHashSet- AddData1 = 311705 / AddData2 = 74487
+TreeSet- AddData1 = 65 / AddData2 = 47
+LinkedList- AddData1 = 47975 / AddData2 = 199914
+HashSet - AddData1 = 47 / AddData2 = 16
+
+
+4.check if "hi" is contained in. data1-
+ChainedHashSet_Contains_hi1 = 5991
+***OpenHashSet_Contains_hi1 = 937*** - the fastest
+TreeSet_Contains_hi1 = 4928
+LinkedList_Contains_hi1 = 2843259
+HashSet_Contains_hi1 = 1487
+
+5. check if "-13170890158" is contained in. data1-
+ChainedHashSet_Contains_negative = 880221
+OpenHashSet_Contains_negative = 1553967
+TreeSet_Contains_negative = 3850
+LinkedList_Contains_negative = 2927035
+***HashSet_Contains_negative = 1521*** - the fastest
+
+6. compare between "-13170890158" and "hi" in  data1-
+ChainedHashSet- "hi" = 5991 / "-13170890158" = 880221
+OpenHashSet- "hi" = 937 / "-13170890158" = 1553967
+TreeSet- "hi" = 4928 / "-13170890158" = 3850
+LinkedList- "hi" = 2843259 / "-13170890158" = 2927035
+HashSet - "hi" = 471487 / "-13170890158" = 1521
+
+7. check if "23" is contained in data2-
+ChainedHashSet_Contains_23 = 1579
+OpenHashSet_Contains_23 = 1086
+TreeSet_Contains_23 = 51928
+LinkedList_Contains_23 = 1675048
+***HashSet_Contains_23 = 969*** - the fastest
+
+8. check if "hi" is contained in  data2
+ChainedHashSet_Contains_hi2 = 900
+***OpenHashSet_Contains_hi2 = 723*** - the fastest
+TreeSet_Contains_hi2 = 3060
+LinkedList_Contains_hi2 = 2747572
+HashSet_Contains_hi2 = 985
+
+9. compare between "23" and "hi" in  data1-
+ChainedHashSet- "hi" = 900 / "23" = 1579
+OpenHashSet- "hi" = 723 / "23" = 1086
+TreeSet- "hi" = 3060 / "23" = 51928
+LinkedList- "hi" = 2747572 / "23" = 1675048
+HashSet - "hi" = 985 / "23" = 969
+
+############################
+Discuss the results of the analysis in depth-
+ 
+ 1. as we can see it is much better in OpenHashSet then in ChainedHashSet:
+ChainedHashSet_AddData1 = 562520
+OpenHashSet_AddData1 = 311705
+
+2. ###weaknesses###- 
+
+ChainedHashSet- 
+data1- takes the largest time of all.
+contain "hi" in data1- takes a lot of time considering all the others.
+
+OpenHashSet- 
+data2- takes a lot of time considering all the others
+contain "-13170890158"-takes a lot of time considering all the others
+
+TreeSet-
+contain "hi" in data2- takes a lot of time considering all the others.
+
+
+LinkedList- 
+data2- takes the largest time of all.
+data1- seems to get a lot of time to add it.
+contain "hi" in data1- takes the largest time.
+contain "-13170890158"- takes the largest time.
+contain "hi" in data2-takes the largest time.
+
+
+HashSet- XXXX
+
+###strengths###-
+
+ChainedHashSet
+contain "23"-  very fast considering all the others
+contain "hi" in data2-very fast (the second fastest).
+
+OpenHashSet-
+contain "hi" in data1- is the fastest in checking if it contains the "hi" string.
+contain "23"-  very fast (the second fastest).
+contain "hi" in data2- is the fastest in checking if it contains the "hi" string.
+
+
+TreeSet- 
+add data1- very fast (the second fastest).
+add data2- very fast (the second fastest).
+contain "-13170890158"- very fast (the second fastest).
+
+LinkedList- XXXX
+
+HashSet-
+add data1- the fastest considering all the others
+add data2- the fastest.
+contain "hi" in data1- very fast (the second fastest).
+contain "-13170890158"- the fastest.
+contain "23"- the fastest.
+ contain "hi" in data2-very fast considering all the others
+ 
+ as we can see the best data structure to use in most of the times is the hashset, which gets
+ the best results considering all the others.
+ as it seems I would prefer not to use the linkedlist data structure if i dont have to. 
+ to add a data to set I would prefer to use the hash set, to check if a string is in the table
+ i would use the OpenHashSet data structure.  
+ ####################
+ 
+ 2. How did your two implementations compare between themselves?
+ 
+ the SimpleHashSets cannot add more then one string in the table set, meanwhile the other can.
+ as it goes, the SimpleHashSets takes more steps to search for an empty place to put the string in.
+ for that it uses the quadratic probe, and the other implementation does not use it.
+ in the meaning of the analysis- 
+ the SimpleHashSets is much faster then the ChainedHashSet.
+  ####################
+ 
+ 3. How did your implementations compare to Java’s built in HashSet?
+ 
+ the HashSet is much faster then my implementations.
+   ####################
+ 
+ 4. What results surprised you and which did you expect?
+ the HashSet results. I didnt expect it to be much faster then all the others. also i didnt expect 
+ the linkedlist to be the worst then all the others. 
+    ####################
+    
+ 5. Did you find java’s HashSet performance on data1.txt surprising? Can you explain it?
+Can google? (no penalty if you leave this empty)
+
+actually, yes I found it surprising. as i mentioned, i didnt expect it to be that faster then all 
+the others. 
+    ####################
+
+6. If you implemented the modulo efficiently (appendix A), how significant was the
+speed-up?
+i could see that it made it much faster then the other way mentioned. it surely made my program 
+more efficient.
